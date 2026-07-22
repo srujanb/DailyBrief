@@ -4,12 +4,14 @@ import SwiftUI
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     private let viewModel = DailyBriefViewModel()
+    private let launchAtLoginController = LaunchAtLoginController()
     private let popover = NSPopover()
     private var statusItem: NSStatusItem?
     private var hotKeyManager: HotKeyManager?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
+        launchAtLoginController.enableByDefaultIfNeeded()
         configurePopover()
         configureStatusItem()
         configureHotKey()
