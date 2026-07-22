@@ -19,7 +19,7 @@ struct DateHeaderView: View {
                     .font(.system(size: 13, weight: .semibold))
                     .frame(width: 28, height: 28)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(HeaderIconButtonStyle())
             .help("Previous day")
 
             Button {
@@ -32,6 +32,16 @@ struct DateHeaderView: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .padding(.vertical, 7)
+            .padding(.horizontal, 12)
+            .background(
+                Capsule(style: .continuous)
+                    .fill(Color.primary.opacity(0.045))
+            )
+            .overlay(
+                Capsule(style: .continuous)
+                    .stroke(Color.primary.opacity(0.06), lineWidth: 1)
+            )
             .popover(isPresented: $showsCalendar, arrowEdge: .top) {
                 ActivityCalendarView(viewModel: viewModel)
                     .padding(14)
@@ -44,8 +54,19 @@ struct DateHeaderView: View {
                     .font(.system(size: 13, weight: .semibold))
                     .frame(width: 28, height: 28)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(HeaderIconButtonStyle())
             .help("Next day")
         }
+    }
+}
+
+private struct HeaderIconButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundStyle(.secondary)
+            .background(
+                Circle()
+                    .fill(configuration.isPressed ? Color.primary.opacity(0.1) : Color.primary.opacity(0.045))
+            )
     }
 }

@@ -18,25 +18,27 @@ struct ActivityCalendarView: View {
     }
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 13) {
             HStack {
                 Button {
                     displayedMonth = monthOffset(-1)
                 } label: {
                     Image(systemName: "chevron.left")
+                        .frame(width: 24, height: 24)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(CalendarIconButtonStyle())
 
                 Text(monthFormatter.string(from: displayedMonth))
-                    .font(.headline)
+                    .font(.system(size: 14, weight: .semibold, design: .rounded))
                     .frame(maxWidth: .infinity)
 
                 Button {
                     displayedMonth = monthOffset(1)
                 } label: {
                     Image(systemName: "chevron.right")
+                        .frame(width: 24, height: 24)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(CalendarIconButtonStyle())
             }
 
             LazyVGrid(columns: columns, spacing: 8) {
@@ -62,7 +64,7 @@ struct ActivityCalendarView: View {
                 }
             }
 
-            HStack(spacing: 12) {
+            HStack(spacing: 10) {
                 legendDot(.blue)
                 Text("Standup")
                 legendDot(.green)
@@ -73,6 +75,7 @@ struct ActivityCalendarView: View {
             .font(.caption2)
             .foregroundStyle(.secondary)
         }
+        .padding(4)
         .frame(width: 292)
         .onAppear {
             displayedMonth = viewModel.selectedDate
@@ -98,16 +101,10 @@ struct ActivityCalendarView: View {
                         .stroke(isToday && !isSelected ? Color.accentColor.opacity(0.6) : Color.clear, lineWidth: 1)
                 )
 
-            HStack(spacing: 2) {
-                if activity.hasStandup {
-                    calendarDot(.blue)
-                }
-                if activity.hasAchievements {
-                    calendarDot(.green)
-                }
-                if activity.hasGratitude {
-                    calendarDot(.red)
-                }
+            HStack(spacing: 2.5) {
+                calendarDot(.blue, isVisible: activity.hasStandup)
+                calendarDot(.green, isVisible: activity.hasAchievements)
+                calendarDot(.red, isVisible: activity.hasGratitude)
             }
             .frame(height: 6)
         }
@@ -144,10 +141,12 @@ struct ActivityCalendarView: View {
         calendar.date(byAdding: .month, value: offset, to: displayedMonth) ?? displayedMonth
     }
 
-    private func calendarDot(_ color: Color) -> some View {
+    private func calendarDot(_ color: Color, isVisible: Bool) -> some View {
         Circle()
             .fill(color)
-            .frame(width: 4.5, height: 4.5)
+            .frame(width: 5, height: 5)
+            .opacity(isVisible ? 1 : 0)
+            .frame(width: 5, height: 5)
     }
 
     private func legendDot(_ color: Color) -> some View {
@@ -160,4 +159,15 @@ struct ActivityCalendarView: View {
 private struct CalendarDay: Identifiable {
     let id = UUID()
     let date: Date?
+}
+
+private struct CalendarIconButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundStyle(.secondary)
+            .background(
+                Circle()
+                    .fill(configuration.isPressed ? Color.primary.opacity(0.1) : Color.primary.opacity(0.04))
+            )
+    }
 }

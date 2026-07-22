@@ -14,7 +14,7 @@ struct SettingsFooterView: View {
                     .lineLimit(1)
                     .truncationMode(.tail)
             } else {
-                Text(viewModel.storageURL.path)
+                Label(viewModel.storageURL.path, systemImage: "folder")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
@@ -49,11 +49,16 @@ struct SettingsFooterView: View {
                 Image(systemName: "gearshape")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundStyle(.secondary)
-                    .frame(width: 28, height: 24)
+                    .frame(width: 28, height: 26)
+                    .background(
+                        Circle()
+                            .fill(Color.primary.opacity(0.045))
+                    )
             }
             .menuStyle(.borderlessButton)
             .help("DailyBrief settings")
         }
+        .padding(.top, 1)
         .onAppear {
             launchAtLogin.refresh()
         }

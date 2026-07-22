@@ -12,38 +12,77 @@ struct EntrySectionView: View {
     let field: EntryField
     @Binding var text: String
     var focusedField: FocusState<EntryField?>.Binding
+    var onTab: (MultilineTextEditor.TabDirection) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.headline)
-                .foregroundStyle(.primary)
+            HStack(spacing: 7) {
+                Circle()
+                    .fill(accentColor.opacity(0.9))
+                    .frame(width: 7, height: 7)
+
+                Text(title)
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.primary)
+            }
 
             ZStack(alignment: .topLeading) {
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(Color(nsColor: .textBackgroundColor))
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color(nsColor: .textBackgroundColor),
+                                Color(nsColor: .textBackgroundColor).opacity(0.82)
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
                     .overlay(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+                            .stroke(
+                                isFocused ? accentColor.opacity(0.5) : Color.primary.opacity(0.08),
+                                lineWidth: isFocused ? 1.5 : 1
+                            )
                     )
+                    .shadow(color: .black.opacity(0.035), radius: 7, x: 0, y: 3)
 
                 if text.isEmpty {
                     Text(placeholder)
                         .font(.body)
                         .foregroundStyle(.secondary)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 11)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 13)
                         .allowsHitTesting(false)
                 }
 
-                TextEditor(text: $text)
-                    .font(.body)
-                    .scrollContentBackground(.hidden)
-                    .background(Color.clear)
-                    .focused(focusedField, equals: field)
-                    .padding(8)
+                MultilineTextEditor(
+                    text: $text,
+                    isFocused: isFocused,
+                    onFocus: {
+                        focusedField.wrappedValue = field
+                    },
+                    onTab: onTab
+                )
+                .padding(.horizontal, 10)
+                .padding(.vertical, 4)
             }
-            .frame(height: 108)
+            .frame(height: 110)
+        }
+    }
+
+    private var isFocused: Bool {
+        focusedField.wrappedValue == field
+    }
+
+    private var accentColor: Color {
+        switch field {
+        case .standup:
+            return .blue
+        case .achievements:
+            return .green
+        case .gratitude:
+            return .red
         }
     }
 }
