@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MenuBarPanelView: View {
     @ObservedObject var viewModel: DailyBriefViewModel
-    @FocusState private var focusedField: EntryField?
+    @State private var focusedField: EntryField?
 
     var body: some View {
         VStack(spacing: 17) {

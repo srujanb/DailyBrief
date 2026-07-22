@@ -91,6 +91,19 @@ struct MultilineTextEditor: NSViewRepresentable {
 
             parent.text = textView.string
         }
+
+        func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+            switch commandSelector {
+            case #selector(NSResponder.insertTab(_:)):
+                parent.onTab(.forward)
+                return true
+            case #selector(NSResponder.insertBacktab(_:)):
+                parent.onTab(.backward)
+                return true
+            default:
+                return false
+            }
+        }
     }
 }
 

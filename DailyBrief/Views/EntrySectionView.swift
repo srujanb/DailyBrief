@@ -11,7 +11,7 @@ struct EntrySectionView: View {
     let placeholder: String
     let field: EntryField
     @Binding var text: String
-    var focusedField: FocusState<EntryField?>.Binding
+    @Binding var focusedField: EntryField?
     var onTab: (MultilineTextEditor.TabDirection) -> Void
 
     var body: some View {
@@ -60,7 +60,7 @@ struct EntrySectionView: View {
                     text: $text,
                     isFocused: isFocused,
                     onFocus: {
-                        focusedField.wrappedValue = field
+                        focusedField = field
                     },
                     onTab: onTab
                 )
@@ -72,7 +72,7 @@ struct EntrySectionView: View {
     }
 
     private var isFocused: Bool {
-        focusedField.wrappedValue == field
+        focusedField == field
     }
 
     private var accentColor: Color {
