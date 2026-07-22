@@ -106,17 +106,12 @@ private final class TabNavigatingTextView: NSTextView {
         return becameFirstResponder
     }
 
-    override func keyDown(with event: NSEvent) {
-        guard event.keyCode == 48 else {
-            super.keyDown(with: event)
-            return
-        }
+    override func insertTab(_ sender: Any?) {
+        onTab?(.forward)
+    }
 
-        if event.modifierFlags.contains(.shift) {
-            onTab?(.backward)
-        } else {
-            onTab?(.forward)
-        }
+    override func insertBacktab(_ sender: Any?) {
+        onTab?(.backward)
     }
 }
 
