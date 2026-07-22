@@ -23,6 +23,8 @@
 		100000000000000000000014 /* ActivityCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000114 /* ActivityCalendarView.swift */; };
 		100000000000000000000015 /* SettingsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000115 /* SettingsFooterView.swift */; };
 		100000000000000000000016 /* MenuBarPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000116 /* MenuBarPanelView.swift */; };
+		100000000000000000000017 /* EntryActivityIndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000202 /* EntryActivityIndexTests.swift */; };
+		100000000000000000000018 /* DailyBriefViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000203 /* DailyBriefViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		100000000000000000000115 /* SettingsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/SettingsFooterView.swift; sourceTree = "<group>"; };
 		100000000000000000000116 /* MenuBarPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/MenuBarPanelView.swift; sourceTree = "<group>"; };
 		100000000000000000000201 /* DailyBriefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBriefTests.swift; sourceTree = "<group>"; };
+		100000000000000000000202 /* EntryActivityIndexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryActivityIndexTests.swift; sourceTree = "<group>"; };
+		100000000000000000000203 /* DailyBriefViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBriefViewModelTests.swift; sourceTree = "<group>"; };
 		100000000000000000000601 /* DailyBrief.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyBrief.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		100000000000000000000602 /* DailyBriefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyBriefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -111,6 +115,8 @@
 			isa = PBXGroup;
 			children = (
 				100000000000000000000201 /* DailyBriefTests.swift */,
+				100000000000000000000202 /* EntryActivityIndexTests.swift */,
+				100000000000000000000203 /* DailyBriefViewModelTests.swift */,
 			);
 			path = DailyBriefTests;
 			sourceTree = "<group>";
@@ -245,6 +251,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				100000000000000000000003 /* DailyBriefTests.swift in Sources */,
+				100000000000000000000017 /* EntryActivityIndexTests.swift in Sources */,
+				100000000000000000000018 /* DailyBriefViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

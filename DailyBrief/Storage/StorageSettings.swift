@@ -44,6 +44,7 @@ struct StorageSettings {
     }
 
     func saveStorageURL(_ url: URL) throws {
+        try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
         let data = try url.bookmarkData(options: [.withSecurityScope], includingResourceValuesForKeys: nil, relativeTo: nil)
         defaults.set(data, forKey: Keys.storageBookmark)
     }
