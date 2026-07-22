@@ -10,6 +10,12 @@ It is built around three daily prompts:
 
 The app stays out of the Dock, opens from the menu bar or a global shortcut, autosaves every edit, and keeps data local in a folder you control.
 
+## Download
+
+[Download DailyBrief.dmg](https://github.com/srujanb/DailyBrief/releases/latest/download/DailyBrief.dmg)
+
+DailyBrief is currently distributed as an unsigned public build. macOS may ask you to confirm before opening it the first time.
+
 ## Features
 
 - Menu bar only app with no Dock icon.

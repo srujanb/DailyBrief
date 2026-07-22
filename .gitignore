@@ -15,5 +15,8 @@ Package.resolved
 # macOS
 .DS_Store
 
+# Local release packaging
+.release/
+
 # Cursor / local editor state
 .cursor/
