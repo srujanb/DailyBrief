@@ -37,7 +37,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     private func configureStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        item.button?.image = NSImage(systemSymbolName: "note.text", accessibilityDescription: "DailyBrief")
+        item.button?.image = MenuBarIcon.sunriseNote()
         item.button?.imagePosition = .imageOnly
         item.button?.target = self
         item.button?.action = #selector(togglePopoverFromStatusItem)
