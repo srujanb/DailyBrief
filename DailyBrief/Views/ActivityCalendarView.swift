@@ -41,6 +41,11 @@ struct ActivityCalendarView: View {
                 .buttonStyle(CalendarIconButtonStyle())
             }
 
+            Button("Today") {
+                selectToday()
+            }
+            .buttonStyle(TodayButtonStyle())
+
             LazyVGrid(columns: columns, spacing: 8) {
                 ForEach(weekdaySymbols, id: \.self) { symbol in
                     Text(symbol)
@@ -137,6 +142,12 @@ struct ActivityCalendarView: View {
         calendar.date(byAdding: .month, value: offset, to: displayedMonth) ?? displayedMonth
     }
 
+    private func selectToday() {
+        let today = calendar.startOfDay(for: Date())
+        displayedMonth = today
+        viewModel.selectDate(today)
+    }
+
     private func activityDots(for activity: EntryActivity) -> some View {
         let dots = ActivityDot.dots(for: activity)
 
@@ -198,6 +209,20 @@ private struct CalendarIconButtonStyle: ButtonStyle {
             .background(
                 Circle()
                     .fill(configuration.isPressed ? Color.primary.opacity(0.1) : Color.primary.opacity(0.04))
+            )
+    }
+}
+
+private struct TodayButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(Color.accentColor)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 5)
+            .background(
+                Capsule(style: .continuous)
+                    .fill(configuration.isPressed ? Color.accentColor.opacity(0.16) : Color.accentColor.opacity(0.1))
             )
     }
 }
