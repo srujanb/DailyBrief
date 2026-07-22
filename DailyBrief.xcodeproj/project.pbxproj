@@ -10,6 +10,12 @@
 		100000000000000000000001 /* DailyBriefApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000101 /* DailyBriefApp.swift */; };
 		100000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000102 /* AppDelegate.swift */; };
 		100000000000000000000003 /* DailyBriefTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000201 /* DailyBriefTests.swift */; };
+		100000000000000000000004 /* DailyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000104 /* DailyEntry.swift */; };
+		100000000000000000000005 /* DateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000105 /* DateKey.swift */; };
+		100000000000000000000006 /* StorageSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000106 /* StorageSettings.swift */; };
+		100000000000000000000007 /* EntryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000107 /* EntryStore.swift */; };
+		100000000000000000000008 /* EntryActivityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000108 /* EntryActivityIndex.swift */; };
+		100000000000000000000009 /* DailyBriefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000109 /* DailyBriefViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +32,12 @@
 		100000000000000000000101 /* DailyBriefApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBriefApp.swift; sourceTree = "<group>"; };
 		100000000000000000000102 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/AppDelegate.swift; sourceTree = "<group>"; };
 		100000000000000000000103 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		100000000000000000000104 /* DailyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/DailyEntry.swift; sourceTree = "<group>"; };
+		100000000000000000000105 /* DateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/DateKey.swift; sourceTree = "<group>"; };
+		100000000000000000000106 /* StorageSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage/StorageSettings.swift; sourceTree = "<group>"; };
+		100000000000000000000107 /* EntryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage/EntryStore.swift; sourceTree = "<group>"; };
+		100000000000000000000108 /* EntryActivityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage/EntryActivityIndex.swift; sourceTree = "<group>"; };
+		100000000000000000000109 /* DailyBriefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels/DailyBriefViewModel.swift; sourceTree = "<group>"; };
 		100000000000000000000201 /* DailyBriefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBriefTests.swift; sourceTree = "<group>"; };
 		100000000000000000000601 /* DailyBrief.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyBrief.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		100000000000000000000602 /* DailyBriefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyBriefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +75,12 @@
 			children = (
 				100000000000000000000101 /* DailyBriefApp.swift */,
 				100000000000000000000102 /* AppDelegate.swift */,
+				100000000000000000000104 /* DailyEntry.swift */,
+				100000000000000000000105 /* DateKey.swift */,
+				100000000000000000000106 /* StorageSettings.swift */,
+				100000000000000000000107 /* EntryStore.swift */,
+				100000000000000000000108 /* EntryActivityIndex.swift */,
+				100000000000000000000109 /* DailyBriefViewModel.swift */,
 				100000000000000000000103 /* Info.plist */,
 			);
 			path = DailyBrief;
@@ -185,6 +203,12 @@
 			files = (
 				100000000000000000000001 /* DailyBriefApp.swift in Sources */,
 				100000000000000000000002 /* AppDelegate.swift in Sources */,
+				100000000000000000000004 /* DailyEntry.swift in Sources */,
+				100000000000000000000005 /* DateKey.swift in Sources */,
+				100000000000000000000006 /* StorageSettings.swift in Sources */,
+				100000000000000000000007 /* EntryStore.swift in Sources */,
+				100000000000000000000008 /* EntryActivityIndex.swift in Sources */,
+				100000000000000000000009 /* DailyBriefViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
