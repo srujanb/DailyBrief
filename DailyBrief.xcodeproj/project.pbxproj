@@ -16,6 +16,13 @@
 		100000000000000000000007 /* EntryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000107 /* EntryStore.swift */; };
 		100000000000000000000008 /* EntryActivityIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000108 /* EntryActivityIndex.swift */; };
 		100000000000000000000009 /* DailyBriefViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000109 /* DailyBriefViewModel.swift */; };
+		100000000000000000000010 /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000110 /* HotKeyManager.swift */; };
+		100000000000000000000011 /* LaunchAtLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000111 /* LaunchAtLoginController.swift */; };
+		100000000000000000000012 /* EntrySectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000112 /* EntrySectionView.swift */; };
+		100000000000000000000013 /* DateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000113 /* DateHeaderView.swift */; };
+		100000000000000000000014 /* ActivityCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000114 /* ActivityCalendarView.swift */; };
+		100000000000000000000015 /* SettingsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000115 /* SettingsFooterView.swift */; };
+		100000000000000000000016 /* MenuBarPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000116 /* MenuBarPanelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +45,13 @@
 		100000000000000000000107 /* EntryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage/EntryStore.swift; sourceTree = "<group>"; };
 		100000000000000000000108 /* EntryActivityIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage/EntryActivityIndex.swift; sourceTree = "<group>"; };
 		100000000000000000000109 /* DailyBriefViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels/DailyBriefViewModel.swift; sourceTree = "<group>"; };
+		100000000000000000000110 /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeys/HotKeyManager.swift; sourceTree = "<group>"; };
+		100000000000000000000111 /* LaunchAtLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings/LaunchAtLoginController.swift; sourceTree = "<group>"; };
+		100000000000000000000112 /* EntrySectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/EntrySectionView.swift; sourceTree = "<group>"; };
+		100000000000000000000113 /* DateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/DateHeaderView.swift; sourceTree = "<group>"; };
+		100000000000000000000114 /* ActivityCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/ActivityCalendarView.swift; sourceTree = "<group>"; };
+		100000000000000000000115 /* SettingsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/SettingsFooterView.swift; sourceTree = "<group>"; };
+		100000000000000000000116 /* MenuBarPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/MenuBarPanelView.swift; sourceTree = "<group>"; };
 		100000000000000000000201 /* DailyBriefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBriefTests.swift; sourceTree = "<group>"; };
 		100000000000000000000601 /* DailyBrief.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyBrief.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		100000000000000000000602 /* DailyBriefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyBriefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +95,13 @@
 				100000000000000000000107 /* EntryStore.swift */,
 				100000000000000000000108 /* EntryActivityIndex.swift */,
 				100000000000000000000109 /* DailyBriefViewModel.swift */,
+				100000000000000000000110 /* HotKeyManager.swift */,
+				100000000000000000000111 /* LaunchAtLoginController.swift */,
+				100000000000000000000112 /* EntrySectionView.swift */,
+				100000000000000000000113 /* DateHeaderView.swift */,
+				100000000000000000000114 /* ActivityCalendarView.swift */,
+				100000000000000000000115 /* SettingsFooterView.swift */,
+				100000000000000000000116 /* MenuBarPanelView.swift */,
 				100000000000000000000103 /* Info.plist */,
 			);
 			path = DailyBrief;
@@ -209,6 +230,13 @@
 				100000000000000000000007 /* EntryStore.swift in Sources */,
 				100000000000000000000008 /* EntryActivityIndex.swift in Sources */,
 				100000000000000000000009 /* DailyBriefViewModel.swift in Sources */,
+				100000000000000000000010 /* HotKeyManager.swift in Sources */,
+				100000000000000000000011 /* LaunchAtLoginController.swift in Sources */,
+				100000000000000000000012 /* EntrySectionView.swift in Sources */,
+				100000000000000000000013 /* DateHeaderView.swift in Sources */,
+				100000000000000000000014 /* ActivityCalendarView.swift in Sources */,
+				100000000000000000000015 /* SettingsFooterView.swift in Sources */,
+				100000000000000000000016 /* MenuBarPanelView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
