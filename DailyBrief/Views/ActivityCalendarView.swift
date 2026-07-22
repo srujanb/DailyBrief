@@ -6,7 +6,6 @@ struct ActivityCalendarView: View {
 
     private let calendar = Calendar.current
     private let columns = Array(repeating: GridItem(.fixed(34), spacing: 6), count: 7)
-    private let activityDotSize: CGFloat = 5
     private let monthFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
@@ -103,7 +102,7 @@ struct ActivityCalendarView: View {
                 )
 
             activityDots(for: activity)
-                .frame(width: 22, height: 6)
+                .frame(height: ActivityDot.size)
         }
         .frame(width: 34, height: 38)
         .contentShape(Rectangle())
@@ -139,34 +138,15 @@ struct ActivityCalendarView: View {
     }
 
     private func activityDots(for activity: EntryActivity) -> some View {
-        let colors = activityDotColors(for: activity)
+        let dots = ActivityDot.dots(for: activity)
 
-        return HStack(spacing: 2.5) {
-            ForEach(Array(colors.enumerated()), id: \.offset) { _, color in
-                calendarDot(color)
+        return HStack(spacing: ActivityDot.spacing) {
+            ForEach(dots) { dot in
+                Circle()
+                    .fill(dot.color)
+                    .frame(width: ActivityDot.size, height: ActivityDot.size)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .center)
-    }
-
-    private func activityDotColors(for activity: EntryActivity) -> [Color] {
-        var colors: [Color] = []
-        if activity.hasStandup {
-            colors.append(.blue)
-        }
-        if activity.hasAchievements {
-            colors.append(.green)
-        }
-        if activity.hasGratitude {
-            colors.append(.red)
-        }
-        return colors
-    }
-
-    private func calendarDot(_ color: Color) -> some View {
-        Circle()
-            .fill(color)
-            .frame(width: activityDotSize, height: activityDotSize)
     }
 
     private func legendDot(_ color: Color) -> some View {
@@ -179,6 +159,36 @@ struct ActivityCalendarView: View {
 private struct CalendarDay: Identifiable {
     let id = UUID()
     let date: Date?
+}
+
+private struct ActivityDot: Identifiable {
+    static let size: CGFloat = 5
+    static let spacing: CGFloat = 3
+
+    let id: Kind
+    let color: Color
+
+    enum Kind {
+        case standup
+        case achievements
+        case gratitude
+    }
+
+    static func dots(for activity: EntryActivity) -> [ActivityDot] {
+        var dots: [ActivityDot] = []
+
+        if activity.hasStandup {
+            dots.append(ActivityDot(id: .standup, color: .blue))
+        }
+        if activity.hasAchievements {
+            dots.append(ActivityDot(id: .achievements, color: .green))
+        }
+        if activity.hasGratitude {
+            dots.append(ActivityDot(id: .gratitude, color: .red))
+        }
+
+        return dots
+    }
 }
 
 private struct CalendarIconButtonStyle: ButtonStyle {
