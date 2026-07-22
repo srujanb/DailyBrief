@@ -32,7 +32,7 @@ struct MultilineTextEditor: NSViewRepresentable {
         textView.onFocus = onFocus
         textView.onTab = onTab
 
-        let scrollView = NSScrollView()
+        let scrollView = ActiveScrollOnlyScrollView()
         scrollView.documentView = textView
         scrollView.drawsBackground = false
         scrollView.hasVerticalScroller = true
@@ -41,6 +41,7 @@ struct MultilineTextEditor: NSViewRepresentable {
         scrollView.scrollerStyle = .overlay
         scrollView.borderType = .noBorder
         scrollView.verticalScrollElasticity = .automatic
+        scrollView.hideScrollerImmediately()
 
         textView.minSize = NSSize(width: 0, height: 0)
         textView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
@@ -116,5 +117,43 @@ private final class TabNavigatingTextView: NSTextView {
         } else {
             onTab?(.forward)
         }
+    }
+}
+
+private final class ActiveScrollOnlyScrollView: NSScrollView {
+    private var hideScrollerWorkItem: DispatchWorkItem?
+
+    override var hasVerticalScroller: Bool {
+        didSet {
+            hideScrollerImmediately()
+        }
+    }
+
+    override func scrollWheel(with event: NSEvent) {
+        showScrollerWhileScrolling()
+        super.scrollWheel(with: event)
+        scheduleScrollerHide()
+    }
+
+    func hideScrollerImmediately() {
+        hideScrollerWorkItem?.cancel()
+        verticalScroller?.alphaValue = 0
+    }
+
+    private func showScrollerWhileScrolling() {
+        hideScrollerWorkItem?.cancel()
+        verticalScroller?.animator().alphaValue = 1
+    }
+
+    private func scheduleScrollerHide() {
+        let workItem = DispatchWorkItem { [weak self] in
+            NSAnimationContext.runAnimationGroup { context in
+                context.duration = 0.18
+                self?.verticalScroller?.animator().alphaValue = 0
+            }
+        }
+
+        hideScrollerWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.45, execute: workItem)
     }
 }
