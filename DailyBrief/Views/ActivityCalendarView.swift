@@ -6,6 +6,7 @@ struct ActivityCalendarView: View {
 
     private let calendar = Calendar.current
     private let columns = Array(repeating: GridItem(.fixed(34), spacing: 6), count: 7)
+    private let activityDotSize: CGFloat = 5
     private let monthFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
@@ -101,12 +102,8 @@ struct ActivityCalendarView: View {
                         .stroke(isToday && !isSelected ? Color.accentColor.opacity(0.6) : Color.clear, lineWidth: 1)
                 )
 
-            HStack(spacing: 2.5) {
-                calendarDot(.blue, isVisible: activity.hasStandup)
-                calendarDot(.green, isVisible: activity.hasAchievements)
-                calendarDot(.red, isVisible: activity.hasGratitude)
-            }
-            .frame(height: 6)
+            activityDots(for: activity)
+                .frame(width: 22, height: 6)
         }
         .frame(width: 34, height: 38)
         .contentShape(Rectangle())
@@ -141,12 +138,35 @@ struct ActivityCalendarView: View {
         calendar.date(byAdding: .month, value: offset, to: displayedMonth) ?? displayedMonth
     }
 
-    private func calendarDot(_ color: Color, isVisible: Bool) -> some View {
+    private func activityDots(for activity: EntryActivity) -> some View {
+        let colors = activityDotColors(for: activity)
+
+        return HStack(spacing: 2.5) {
+            ForEach(Array(colors.enumerated()), id: \.offset) { _, color in
+                calendarDot(color)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    private func activityDotColors(for activity: EntryActivity) -> [Color] {
+        var colors: [Color] = []
+        if activity.hasStandup {
+            colors.append(.blue)
+        }
+        if activity.hasAchievements {
+            colors.append(.green)
+        }
+        if activity.hasGratitude {
+            colors.append(.red)
+        }
+        return colors
+    }
+
+    private func calendarDot(_ color: Color) -> some View {
         Circle()
             .fill(color)
-            .frame(width: 5, height: 5)
-            .opacity(isVisible ? 1 : 0)
-            .frame(width: 5, height: 5)
+            .frame(width: activityDotSize, height: activityDotSize)
     }
 
     private func legendDot(_ color: Color) -> some View {
