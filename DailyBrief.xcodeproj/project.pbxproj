@@ -27,6 +27,7 @@
 		100000000000000000000018 /* DailyBriefViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000203 /* DailyBriefViewModelTests.swift */; };
 		100000000000000000000019 /* MultilineTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000117 /* MultilineTextEditor.swift */; };
 		100000000000000000000020 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000118 /* MenuBarIcon.swift */; };
+		100000000000000000000021 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000119 /* AppIcon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		100000000000000000000116 /* MenuBarPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/MenuBarPanelView.swift; sourceTree = "<group>"; };
 		100000000000000000000117 /* MultilineTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/MultilineTextEditor.swift; sourceTree = "<group>"; };
 		100000000000000000000118 /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/MenuBarIcon.swift; sourceTree = "<group>"; };
+		100000000000000000000119 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Resources/AppIcon.icns; sourceTree = "<group>"; };
 		100000000000000000000201 /* DailyBriefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBriefTests.swift; sourceTree = "<group>"; };
 		100000000000000000000202 /* EntryActivityIndexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryActivityIndexTests.swift; sourceTree = "<group>"; };
 		100000000000000000000203 /* DailyBriefViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBriefViewModelTests.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				100000000000000000000115 /* SettingsFooterView.swift */,
 				100000000000000000000116 /* MenuBarPanelView.swift */,
 				100000000000000000000117 /* MultilineTextEditor.swift */,
+				100000000000000000000119 /* AppIcon.icns */,
 				100000000000000000000103 /* Info.plist */,
 			);
 			path = DailyBrief;
@@ -217,6 +220,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				100000000000000000000021 /* AppIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
