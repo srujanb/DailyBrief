@@ -68,4 +68,13 @@ final class EntryStoreTests: XCTestCase {
 
         XCTAssertEqual(try store.loadEntry(forKey: "2026-07-21").achievements, "Shipped v1")
     }
+
+    func testStatusItemDateResetGateOnlyResetsAfterMoreThanOneHour() {
+        var gate = StatusItemDateResetGate()
+        let firstOpenDate = Date(timeIntervalSinceReferenceDate: 1_000)
+
+        XCTAssertTrue(gate.shouldResetDate(forStatusItemOpenAt: firstOpenDate))
+        XCTAssertFalse(gate.shouldResetDate(forStatusItemOpenAt: firstOpenDate.addingTimeInterval(60 * 60)))
+        XCTAssertTrue(gate.shouldResetDate(forStatusItemOpenAt: firstOpenDate.addingTimeInterval(2 * 60 * 60 + 1)))
+    }
 }

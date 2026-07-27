@@ -6,6 +6,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     private let viewModel = DailyBriefViewModel()
     private let launchAtLoginController = LaunchAtLoginController()
     private let popover = NSPopover()
+    private var statusItemDateResetGate = StatusItemDateResetGate()
     private var statusItem: NSStatusItem?
     private var hotKeyManager: HotKeyManager?
 
@@ -27,7 +28,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     }
 
     @objc private func togglePopoverFromStatusItem() {
-        togglePopover()
+        if popover.isShown {
+            popover.performClose(nil)
+        } else {
+            showPopoverFromStatusItem()
+        }
     }
 
     private func configurePopover() {
@@ -64,6 +69,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         }
     }
 
+    private func showPopoverFromStatusItem() {
+        let currentDate = Date()
+        if statusItemDateResetGate.shouldResetDate(forStatusItemOpenAt: currentDate) {
+            viewModel.selectDate(currentDate)
+        }
+
+        showPopover()
+    }
+
     private func showPopover() {
         guard let button = statusItem?.button else {
             return
@@ -71,5 +85,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
         popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
         NSApp.activate(ignoringOtherApps: true)
+    }
+}
+
+struct StatusItemDateResetGate {
+    private static let resetInterval: TimeInterval = 60 * 60
+
+    private var lastStatusItemOpenDate: Date?
+
+    mutating func shouldResetDate(forStatusItemOpenAt currentDate: Date) -> Bool {
+        defer {
+            lastStatusItemOpenDate = currentDate
+        }
+
+        guard let lastStatusItemOpenDate else {
+            return true
+        }
+
+        return currentDate.timeIntervalSince(lastStatusItemOpenDate) > Self.resetInterval
     }
 }
