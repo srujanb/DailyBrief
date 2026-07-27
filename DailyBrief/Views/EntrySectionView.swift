@@ -7,12 +7,17 @@ enum EntryField: Hashable {
 }
 
 struct EntrySectionView: View {
+    private static let minimumEditorHeight: CGFloat = 110
+    private static let maximumEditorHeight: CGFloat = 160
+
     let title: String
     let placeholder: String
     let field: EntryField
     @Binding var text: String
     @Binding var focusedField: EntryField?
     var onTab: (MultilineTextEditor.TabDirection) -> Void
+
+    @State private var editorContentHeight: CGFloat = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -58,6 +63,7 @@ struct EntrySectionView: View {
 
                 MultilineTextEditor(
                     text: $text,
+                    contentHeight: $editorContentHeight,
                     isFocused: isFocused,
                     onFocus: {
                         focusedField = field
@@ -67,8 +73,15 @@ struct EntrySectionView: View {
                 .padding(.horizontal, 10)
                 .padding(.vertical, 4)
             }
-            .frame(height: 110)
+            .frame(height: editorHeight)
         }
+    }
+
+    private var editorHeight: CGFloat {
+        min(
+            Self.maximumEditorHeight,
+            max(Self.minimumEditorHeight, editorContentHeight + 8)
+        )
     }
 
     private var isFocused: Bool {

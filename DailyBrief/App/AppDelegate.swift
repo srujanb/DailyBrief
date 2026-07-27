@@ -39,7 +39,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         popover.behavior = .transient
         popover.contentSize = NSSize(width: 430, height: 560)
         popover.delegate = self
-        popover.contentViewController = NSHostingController(rootView: MenuBarPanelView(viewModel: viewModel))
+
+        let hostingController = NSHostingController(rootView: MenuBarPanelView(viewModel: viewModel))
+        hostingController.sizingOptions = [.preferredContentSize]
+        popover.contentViewController = hostingController
     }
 
     private func configureStatusItem() {

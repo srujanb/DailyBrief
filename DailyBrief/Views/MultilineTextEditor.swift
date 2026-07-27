@@ -8,6 +8,7 @@ struct MultilineTextEditor: NSViewRepresentable {
     }
 
     @Binding var text: String
+    @Binding var contentHeight: CGFloat
     var isFocused: Bool
     var onFocus: () -> Void
     var onTab: (TabDirection) -> Void
@@ -66,6 +67,8 @@ struct MultilineTextEditor: NSViewRepresentable {
             textView.string = text
         }
 
+        context.coordinator.updateContentHeight(for: textView)
+
         if isFocused, textView.window?.firstResponder !== textView {
             DispatchQueue.main.async {
                 textView.window?.makeFirstResponder(textView)
@@ -90,6 +93,7 @@ struct MultilineTextEditor: NSViewRepresentable {
             }
 
             parent.text = textView.string
+            updateContentHeight(for: textView)
         }
 
         func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
@@ -102,6 +106,29 @@ struct MultilineTextEditor: NSViewRepresentable {
                 return true
             default:
                 return false
+            }
+        }
+
+        func updateContentHeight(for textView: NSTextView) {
+            DispatchQueue.main.async { [weak textView, weak self] in
+                guard
+                    let self,
+                    let textView,
+                    let layoutManager = textView.layoutManager,
+                    let textContainer = textView.textContainer
+                else {
+                    return
+                }
+
+                layoutManager.ensureLayout(for: textContainer)
+
+                let usedRect = layoutManager.usedRect(for: textContainer)
+                let renderedHeight = max(usedRect.maxY, layoutManager.extraLineFragmentRect.maxY)
+                let contentHeight = ceil(renderedHeight + textView.textContainerInset.height * 2)
+
+                if abs(self.parent.contentHeight - contentHeight) > 0.5 {
+                    self.parent.contentHeight = contentHeight
+                }
             }
         }
     }
