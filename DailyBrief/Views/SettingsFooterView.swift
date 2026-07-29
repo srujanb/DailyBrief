@@ -3,6 +3,7 @@ import SwiftUI
 
 struct SettingsFooterView: View {
     @ObservedObject var viewModel: DailyBriefViewModel
+    var onSearch: (() -> Void)? = nil
     @StateObject private var launchAtLogin = LaunchAtLoginController()
 
     var body: some View {
@@ -22,6 +23,23 @@ struct SettingsFooterView: View {
             }
 
             Spacer()
+
+            if let onSearch {
+                Button(action: onSearch) {
+                    Image(systemName: "magnifyingglass")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                        .frame(width: 28, height: 26)
+                        .background(
+                            Circle()
+                                .fill(Color.primary.opacity(0.045))
+                        )
+                }
+                .buttonStyle(.plain)
+                .keyboardShortcut("f", modifiers: .command)
+                .help("Search entries (⌘F)")
+                .accessibilityLabel("Search daily entries")
+            }
 
             Menu {
                 Button("Choose Storage Folder...") {

@@ -28,6 +28,10 @@
 		100000000000000000000019 /* MultilineTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000117 /* MultilineTextEditor.swift */; };
 		100000000000000000000020 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000118 /* MenuBarIcon.swift */; };
 		100000000000000000000021 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000119 /* AppIcon.icns */; };
+		100000000000000000000022 /* EntryField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000120 /* EntryField.swift */; };
+		100000000000000000000023 /* EntrySearchIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000121 /* EntrySearchIndex.swift */; };
+		100000000000000000000024 /* EntrySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000122 /* EntrySearchView.swift */; };
+		100000000000000000000025 /* EntrySearchIndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000204 /* EntrySearchIndexTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,9 +64,13 @@
 		100000000000000000000117 /* MultilineTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/MultilineTextEditor.swift; sourceTree = "<group>"; };
 		100000000000000000000118 /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/MenuBarIcon.swift; sourceTree = "<group>"; };
 		100000000000000000000119 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Resources/AppIcon.icns; sourceTree = "<group>"; };
+		100000000000000000000120 /* EntryField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/EntryField.swift; sourceTree = "<group>"; };
+		100000000000000000000121 /* EntrySearchIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage/EntrySearchIndex.swift; sourceTree = "<group>"; };
+		100000000000000000000122 /* EntrySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/EntrySearchView.swift; sourceTree = "<group>"; };
 		100000000000000000000201 /* DailyBriefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBriefTests.swift; sourceTree = "<group>"; };
 		100000000000000000000202 /* EntryActivityIndexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryActivityIndexTests.swift; sourceTree = "<group>"; };
 		100000000000000000000203 /* DailyBriefViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBriefViewModelTests.swift; sourceTree = "<group>"; };
+		100000000000000000000204 /* EntrySearchIndexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntrySearchIndexTests.swift; sourceTree = "<group>"; };
 		100000000000000000000601 /* DailyBrief.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyBrief.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		100000000000000000000602 /* DailyBriefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyBriefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -102,9 +110,11 @@
 				100000000000000000000118 /* MenuBarIcon.swift */,
 				100000000000000000000104 /* DailyEntry.swift */,
 				100000000000000000000105 /* DateKey.swift */,
+				100000000000000000000120 /* EntryField.swift */,
 				100000000000000000000106 /* StorageSettings.swift */,
 				100000000000000000000107 /* EntryStore.swift */,
 				100000000000000000000108 /* EntryActivityIndex.swift */,
+				100000000000000000000121 /* EntrySearchIndex.swift */,
 				100000000000000000000109 /* DailyBriefViewModel.swift */,
 				100000000000000000000110 /* HotKeyManager.swift */,
 				100000000000000000000111 /* LaunchAtLoginController.swift */,
@@ -114,6 +124,7 @@
 				100000000000000000000115 /* SettingsFooterView.swift */,
 				100000000000000000000116 /* MenuBarPanelView.swift */,
 				100000000000000000000117 /* MultilineTextEditor.swift */,
+				100000000000000000000122 /* EntrySearchView.swift */,
 				100000000000000000000119 /* AppIcon.icns */,
 				100000000000000000000103 /* Info.plist */,
 			);
@@ -126,6 +137,7 @@
 				100000000000000000000201 /* DailyBriefTests.swift */,
 				100000000000000000000202 /* EntryActivityIndexTests.swift */,
 				100000000000000000000203 /* DailyBriefViewModelTests.swift */,
+				100000000000000000000204 /* EntrySearchIndexTests.swift */,
 			);
 			path = DailyBriefTests;
 			sourceTree = "<group>";
@@ -255,6 +267,9 @@
 				100000000000000000000016 /* MenuBarPanelView.swift in Sources */,
 				100000000000000000000019 /* MultilineTextEditor.swift in Sources */,
 				100000000000000000000020 /* MenuBarIcon.swift in Sources */,
+				100000000000000000000022 /* EntryField.swift in Sources */,
+				100000000000000000000023 /* EntrySearchIndex.swift in Sources */,
+				100000000000000000000024 /* EntrySearchView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +280,7 @@
 				100000000000000000000003 /* DailyBriefTests.swift in Sources */,
 				100000000000000000000017 /* EntryActivityIndexTests.swift in Sources */,
 				100000000000000000000018 /* DailyBriefViewModelTests.swift in Sources */,
+				100000000000000000000025 /* EntrySearchIndexTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,13 +1,34 @@
 import Foundation
 
 final class EntryStore {
+    struct EntryFileFingerprint: Equatable, Sendable {
+        let fileName: String
+        let fileSize: Int
+        let modificationTime: TimeInterval
+    }
+
+    struct EntriesFingerprint: Equatable, Sendable {
+        let files: [EntryFileFingerprint]
+
+        static let empty = EntriesFingerprint(files: [])
+    }
+
+    struct LoadAllEntriesResult: Sendable {
+        let entries: [DailyEntry]
+        let skippedFileURLs: [URL]
+        let fingerprint: EntriesFingerprint
+    }
+
     enum StoreError: LocalizedError {
         case invalidEntryFile(URL)
+        case entriesChangedDuringLoad(URL)
 
         var errorDescription: String? {
             switch self {
             case .invalidEntryFile(let url):
                 return "Could not read DailyBrief entry at \(url.path)."
+            case .entriesChangedDuringLoad(let url):
+                return "DailyBrief entries changed while reading \(url.path). Please try again."
             }
         }
     }
@@ -44,7 +65,9 @@ final class EntryStore {
 
         do {
             let data = try Data(contentsOf: fileURL)
-            return try decoder.decode(DailyEntry.self, from: data)
+            var entry = try decoder.decode(DailyEntry.self, from: data)
+            entry.dateKey = dateKey
+            return entry
         } catch {
             throw StoreError.invalidEntryFile(fileURL)
         }
@@ -89,6 +112,71 @@ final class EntryStore {
         return index
     }
 
+    func loadAllEntries() throws -> LoadAllEntriesResult {
+        for _ in 0..<3 {
+            try Task.checkCancellation()
+            let fingerprintBeforeLoad = try entriesFingerprint()
+            let fileURLs = fingerprintBeforeLoad.files.map {
+                entriesDirectory.appendingPathComponent($0.fileName)
+            }
+            let loadedEntries = try loadEntries(from: fileURLs)
+            let fingerprintAfterLoad = try entriesFingerprint()
+
+            if fingerprintBeforeLoad == fingerprintAfterLoad {
+                return LoadAllEntriesResult(
+                    entries: loadedEntries.entries,
+                    skippedFileURLs: loadedEntries.skippedFileURLs,
+                    fingerprint: fingerprintAfterLoad
+                )
+            }
+        }
+
+        throw StoreError.entriesChangedDuringLoad(entriesDirectory)
+    }
+
+    private func loadEntries(from fileURLs: [URL]) throws -> (
+        entries: [DailyEntry],
+        skippedFileURLs: [URL]
+    ) {
+        var entries: [DailyEntry] = []
+        var skippedFileURLs: [URL] = []
+
+        for fileURL in fileURLs {
+            try Task.checkCancellation()
+            let dateKey = fileURL.deletingPathExtension().lastPathComponent
+
+            guard DateKey.isValid(dateKey) else {
+                skippedFileURLs.append(fileURL)
+                continue
+            }
+
+            do {
+                entries.append(try loadEntry(forKey: dateKey))
+            } catch {
+                skippedFileURLs.append(fileURL)
+            }
+        }
+
+        return (entries, skippedFileURLs)
+    }
+
+    func entriesFingerprint() throws -> EntriesFingerprint {
+        guard fileManager.fileExists(atPath: entriesDirectory.path) else {
+            return .empty
+        }
+
+        let fileURLs = try fileManager.contentsOfDirectory(
+            at: entriesDirectory,
+            includingPropertiesForKeys: [.fileSizeKey, .contentModificationDateKey],
+            options: [.skipsHiddenFiles]
+        )
+        let sortedFileURLs = fileURLs
+            .filter { $0.pathExtension == "json" }
+            .sorted { $0.lastPathComponent < $1.lastPathComponent }
+
+        return try makeFingerprint(for: sortedFileURLs)
+    }
+
     func switchStorage(to newBaseURL: URL, copyExistingDataIfDestinationEmpty: Bool) throws {
         let oldEntriesDirectory = entriesDirectory
         let newEntriesDirectory = newBaseURL.appendingPathComponent("entries", isDirectory: true)
@@ -122,6 +210,21 @@ final class EntryStore {
 
     private func ensureEntriesDirectoryExists() throws {
         try fileManager.createDirectory(at: entriesDirectory, withIntermediateDirectories: true)
+    }
+
+    private func makeFingerprint(for fileURLs: [URL]) throws -> EntriesFingerprint {
+        let files = try fileURLs.map { fileURL in
+            try Task.checkCancellation()
+            let values = try fileURL.resourceValues(
+                forKeys: [.fileSizeKey, .contentModificationDateKey]
+            )
+            return EntryFileFingerprint(
+                fileName: fileURL.lastPathComponent,
+                fileSize: values.fileSize ?? 0,
+                modificationTime: values.contentModificationDate?.timeIntervalSinceReferenceDate ?? 0
+            )
+        }
+        return EntriesFingerprint(files: files)
     }
 
     private func entryFileURL(forKey dateKey: String) -> URL {

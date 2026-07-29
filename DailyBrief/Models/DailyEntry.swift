@@ -1,6 +1,6 @@
 import Foundation
 
-struct DailyEntry: Codable, Equatable {
+struct DailyEntry: Codable, Equatable, Sendable {
     var dateKey: String
     var standup: String
     var achievements: String
@@ -30,7 +30,7 @@ struct DailyEntry: Codable, Equatable {
     }
 }
 
-struct EntryActivity: Codable, Equatable {
+struct EntryActivity: Codable, Equatable, Sendable {
     var hasStandup: Bool
     var hasAchievements: Bool
     var hasGratitude: Bool

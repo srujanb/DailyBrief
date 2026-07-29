@@ -1,11 +1,5 @@
 import SwiftUI
 
-enum EntryField: Hashable {
-    case standup
-    case achievements
-    case gratitude
-}
-
 struct EntrySectionView: View {
     private static let minimumEditorHeight: CGFloat = 110
     private static let maximumEditorHeight: CGFloat = 160
@@ -23,7 +17,7 @@ struct EntrySectionView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 7) {
                 Circle()
-                    .fill(accentColor.opacity(0.9))
+                    .fill(field.accentColor.opacity(0.9))
                     .frame(width: 7, height: 7)
 
                 Text(title)
@@ -46,7 +40,7 @@ struct EntrySectionView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
                             .stroke(
-                                isFocused ? accentColor.opacity(0.5) : Color.primary.opacity(0.08),
+                                isFocused ? field.accentColor.opacity(0.5) : Color.primary.opacity(0.08),
                                 lineWidth: isFocused ? 1.5 : 1
                             )
                     )
@@ -88,8 +82,11 @@ struct EntrySectionView: View {
         focusedField == field
     }
 
-    private var accentColor: Color {
-        switch field {
+}
+
+extension EntryField {
+    var accentColor: Color {
+        switch self {
         case .standup:
             return .blue
         case .achievements:

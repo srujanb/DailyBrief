@@ -55,6 +55,79 @@ final class EntryStoreTests: XCTestCase {
         XCTAssertEqual(try store.loadEntry(forKey: "2026-07-21"), DailyEntry(dateKey: "2026-07-21"))
     }
 
+    func testLoadsAllEntriesInDateOrder() throws {
+        try store.save(DailyEntry(dateKey: "2026-07-22", gratitude: "A useful review"))
+        try store.save(DailyEntry(dateKey: "2026-07-20", achievements: "Shipped search"))
+
+        XCTAssertEqual(
+            try store.loadAllEntries().entries.map(\.dateKey),
+            ["2026-07-20", "2026-07-22"]
+        )
+    }
+
+    func testBulkLoadSkipsMalformedFilesAndKeepsValidEntries() throws {
+        try store.save(DailyEntry(dateKey: "2026-07-21", achievements: "Valid entry"))
+        let malformedFileURL = store.entriesDirectory.appendingPathComponent("2026-07-22.json")
+        try Data("not valid JSON".utf8).write(to: malformedFileURL)
+
+        let result = try store.loadAllEntries()
+
+        XCTAssertEqual(result.entries.map(\.dateKey), ["2026-07-21"])
+        XCTAssertEqual(
+            result.skippedFileURLs.map(\.lastPathComponent),
+            [malformedFileURL.lastPathComponent]
+        )
+    }
+
+    func testFilenameIsAuthoritativeWhenPayloadDateKeyDiffers() throws {
+        try FileManager.default.createDirectory(
+            at: store.entriesDirectory,
+            withIntermediateDirectories: true
+        )
+        let fileURL = store.entriesDirectory.appendingPathComponent("2026-07-21.json")
+        let mismatchedEntry = DailyEntry(
+            dateKey: "1999-01-01",
+            achievements: "Copied entry"
+        )
+        try JSONEncoder().encode(mismatchedEntry).write(to: fileURL)
+
+        let entry = try store.loadEntry(forKey: "2026-07-21")
+
+        XCTAssertEqual(entry.dateKey, "2026-07-21")
+        XCTAssertEqual(entry.achievements, "Copied entry")
+    }
+
+    func testBulkLoadSkipsValidJSONWithNonDateFilename() throws {
+        try FileManager.default.createDirectory(
+            at: store.entriesDirectory,
+            withIntermediateDirectories: true
+        )
+        let fileURL = store.entriesDirectory.appendingPathComponent("backup.json")
+        try JSONEncoder().encode(DailyEntry(
+            dateKey: "2026-07-21",
+            achievements: "Backup"
+        )).write(to: fileURL)
+
+        let result = try store.loadAllEntries()
+
+        XCTAssertTrue(result.entries.isEmpty)
+        XCTAssertEqual(result.skippedFileURLs.map(\.lastPathComponent), ["backup.json"])
+    }
+
+    func testEntriesFingerprintChangesWhenFilesChange() throws {
+        try store.save(DailyEntry(dateKey: "2026-07-21", achievements: "First"))
+        let originalFingerprint = try store.entriesFingerprint()
+
+        XCTAssertEqual(try store.entriesFingerprint(), originalFingerprint)
+
+        try store.save(DailyEntry(
+            dateKey: "2026-07-21",
+            achievements: "A substantially longer updated achievement"
+        ))
+
+        XCTAssertNotEqual(try store.entriesFingerprint(), originalFingerprint)
+    }
+
     func testSwitchStorageCopiesExistingEntriesToEmptyDestination() throws {
         try store.save(DailyEntry(dateKey: "2026-07-21", achievements: "Shipped v1"))
 
